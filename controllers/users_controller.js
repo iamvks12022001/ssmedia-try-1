@@ -1,11 +1,11 @@
+const randomstring = require("randomstring");
 const User = require("../models/user");
 const fs = require("fs");
 const path = require("path");
 const Post = require("../models/post");
-
-const randomstring = require("crypto-random-string");
+const sendEmail = require("../mailers/verify_email");
 const newuser = require("../mailers/comments_mailer");
-
+var userlog = {};
 module.exports.profile = async function (req, res) {
   let userCurr = await User.findById(req.user.id);
   let friend = userCurr.friends.find(function (value) {
@@ -66,7 +66,7 @@ module.exports.update = async function (req, res) {
 
 module.exports.signUp = function (req, res) {
   if (req.isAuthenticated()) {
-    return res.redirect("/users/profile" + req.user.id);
+    return res.redirect("/users/profile/" + req.user.id);
   }
   return res.render("user_sign_up", {
     title: "iCoder | Sign Up",
@@ -75,7 +75,7 @@ module.exports.signUp = function (req, res) {
 
 module.exports.signIn = function (req, res) {
   if (req.isAuthenticated()) {
-    return res.redirect("/users/profile" + req.user.id);
+    return res.redirect("/users/profile/" + req.user.id);
   }
 
   return res.render("user_sign_in", {
@@ -84,22 +84,45 @@ module.exports.signIn = function (req, res) {
 };
 
 module.exports.verifyEmail = async function (req, res) {
-  if (req.body.password != req.body.confirm_password) {
-    return res.redirect("back");
+  try {
+    if (req.body.password != req.body.confirm_password) {
+      return res.redirect("back");
+    }
+    const num = await randomstring.generate();
+    console.log(num);
+    await sendEmail.verifyEmail(req.body.email, num);
+    req.body.verify_code = num;
+    userlog = req.body;
+    return res.render("confirm", {
+      title: "Confirm Email",
+      email: req.body.email,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };
 module.exports.create = function (req, res) {
-  if (req.body.password != req.body.confirm_password) {
-    return res.redirect("back");
+  if (!userlog) {
+    return res.end("something went wrong");
+  }
+  if (req.body.code != userlog.verify_code) {
+    console.log(
+      "code not matched",
+      req.body.code,
+      userlog.verify_code,
+      userlog.email
+    );
+    return res.end("something went wrong");
+    //return res.redirect("back");
   }
 
-  User.findOne({ email: req.body.email }, function (err, user) {
+  User.findOne({ email: userlog.email }, function (err, user) {
     if (err) {
       console.log("eror in finding user in signing up");
       return;
     }
     if (!user) {
-      User.create(req.body, function (err, user) {
+      User.create(userlog, function (err, user) {
         if (err) {
           console.log("eror in Creating user in signing up");
           return;

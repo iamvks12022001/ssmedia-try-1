@@ -22,13 +22,12 @@ router.get("/sign-up", usersController.signUp);
 router.get("/sign-in", usersController.signIn);
 
 router.post("/create", usersController.create);
-
+router.post("/verifyemail", usersController.verifyEmail);
 router.post(
   "/create-session",
   passport.authenticate("local", { failureRedirect: "/users/sign-in" }),
   usersController.createSesion
 );
-
 router.get("/sign-out", usersController.destroySession);
 
 router.get(

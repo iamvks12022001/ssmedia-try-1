@@ -1,0 +1,14 @@
+<h3>Authentication Code has been send to this "<b><%= email%></b>" email</h3>
+<br />
+<br />
+<form action="/users/create" method="POST">
+  <input
+    type="text"
+    style="width: 25%"
+    placeholder=" Enter the code"
+    name="code"
+  />
+  <button style="color: black; font-family: 'Courier New', Courier, monospace">
+    Submit
+  </button>
+</form>
