@@ -4,7 +4,10 @@ const fs = require("fs");
 const path = require("path");
 const Post = require("../models/post");
 const sendEmail = require("../mailers/verify_email");
+const setpassword = require("../mailers/set_password");
+
 const newuser = require("../mailers/comments_mailer");
+const Token = require("../models/token");
 var userlog = {};
 module.exports.profile = async function (req, res) {
   let userCurr = await User.findById(req.user.id);
@@ -138,6 +141,68 @@ module.exports.create = function (req, res) {
       return res.redirect("back");
     }
   });
+};
+
+module.exports.forget_password = function (req, res) {
+  return res.render("forget_password", {
+    title: "Forget Password",
+  });
+};
+
+module.exports.set_new_password = async function (req, res) {
+  try {
+    if (req.body.new_password != req.body.Confirm_password) {
+      return res.send("password not matched");
+    }
+
+    const user = await User.findOne({ email: req.body.email });
+    if (!user)
+      return res.status(400).send("user with given email doesn't exist");
+
+    let token = await Token.findOne({ userId: user._id });
+    if (!token) {
+      token = await new Token({
+        userId: user._id,
+        token: randomstring.generate(),
+        password: req.body.new_password,
+      }).save();
+    }
+
+    const link = `${process.env.HOST_URL}/users/reset_password/${user._id}/${token.token}`;
+    await setpassword.setpassword(user.email, link);
+
+    res.send(
+      "<html><head/><body>password reset link sent to your email account <br/><b>close this tab and login again</b></body> <html>"
+    );
+  } catch (error) {
+    res.send("An error occured");
+    console.log(error);
+  }
+};
+
+module.exports.reset_password = async function (req, res) {
+  try {
+    console.log("dddd");
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(400).send("invalid link or expired");
+
+    const token = await Token.findOne({
+      userId: user._id,
+      token: req.params.token,
+    });
+    if (!token) return res.status(400).send("Invalid link or expired");
+
+    user.password = token.password;
+    await user.save();
+    await token.delete();
+
+    res.send(
+      `<html><head/><body>password reset sucessfully.<br/> <br/><button><a href=${process.env.HOST_URL}/users/sign-in> go to sign in page </a></button></body></html>`
+    );
+  } catch (error) {
+    res.send("An error occured");
+    console.log(error);
+  }
 };
 
 module.exports.createSesion = function (req, res) {

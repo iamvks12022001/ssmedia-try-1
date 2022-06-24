@@ -18,6 +18,9 @@ router.post(
   usersController.update
 );
 
+router.get("/forget_password", usersController.forget_password);
+router.post("/set_new_password", usersController.set_new_password);
+router.get("/reset_password/:userId/:token", usersController.reset_password);
 router.get("/sign-up", usersController.signUp);
 router.get("/sign-in", usersController.signIn);
 
