@@ -71,6 +71,20 @@ module.exports.signUp = function (req, res) {
   if (req.isAuthenticated()) {
     return res.redirect("/users/profile/" + req.user.id);
   }
+  return res.render("face", {
+    title: "iCoder | face detection",
+  });
+  // return res.render("user_sign_up", {
+  //   title: "iCoder | Sign Up",
+  // });
+};
+module.exports.signUpauth = function (req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile/" + req.user.id);
+  }
+  // if (!req.signupAuth()) {
+  //   return res.redirect("/users/sign-up");
+  // }
   return res.render("user_sign_up", {
     title: "iCoder | Sign Up",
   });

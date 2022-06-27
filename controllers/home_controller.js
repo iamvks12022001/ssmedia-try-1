@@ -36,43 +36,6 @@ module.exports.home = async function (req, res) {
       all_users: users,
       user: user,
     });
-    // return res.status(200).send({
-    //   message: "List of posts",
-    // posts: [
-    //   {
-    //     content: "Hi Its Harsh Prasad",
-    //     user: {
-    //       friendships: [],
-    //       _id: "6276c2685fb61471d6557346",
-    //       name: "Harsh Prasad",
-    //       email: "harshisindian@gmail.com",
-    //       password: "2503",
-    //       createdAt: "2022-05-07T19:03:04.913Z",
-    //       updatedAt: "2022-05-07T19:03:04.913Z",
-    //       __v: 0,
-    //     },
-    //     createdAt: "2022-05-10T11:12:34.739Z",
-    //     updatedAt: "2022-05-10T11:13:40.126Z",
-    //     __v: 4,
-    //   },
-    //   {
-    //     content: "2ndHi Its Harsh Prasad",
-    //     user: {
-    //       friendships: [],
-    //       _id: "6276c2685fb61471d6557346",
-    //       name: "Harsh Prasad",
-    //       email: "harshisindian@gmail.com",
-    //       password: "2503",
-    //       createdAt: "2022-05-07T19:03:04.913Z",
-    //       updatedAt: "2022-05-07T19:03:04.913Z",
-    //       __v: 0,
-    //     },
-    //     createdAt: "2022-05-10T11:12:34.739Z",
-    //     updatedAt: "2022-05-10T11:13:40.126Z",
-    //     __v: 4,
-    //   },
-    // ],
-    //  });
   } catch (error) {
     console.log("error", error);
     return;
