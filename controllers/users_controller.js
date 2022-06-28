@@ -71,6 +71,10 @@ module.exports.signUp = function (req, res) {
   if (req.isAuthenticated()) {
     return res.redirect("/users/profile/" + req.user.id);
   }
+  if (req.cookies.verified == "true") {
+    return res.redirect("/users/signupauth");
+  }
+  // res.cookie("verified", false);
   return res.render("face", {
     title: "iCoder | face detection",
   });
@@ -81,6 +85,10 @@ module.exports.signUp = function (req, res) {
 module.exports.signUpauth = function (req, res) {
   if (req.isAuthenticated()) {
     return res.redirect("/users/profile/" + req.user.id);
+  }
+  if (req.cookies.verified == "false" || !req.cookies.verified) {
+    console.log("not verified");
+    return res.redirect("/users/sign-up");
   }
   // if (!req.signupAuth()) {
   //   return res.redirect("/users/sign-up");
@@ -196,7 +204,7 @@ module.exports.set_new_password = async function (req, res) {
 
 module.exports.reset_password = async function (req, res) {
   try {
-    console.log("dddd");
+    //   console.log("dddd");
     const user = await User.findById(req.params.userId);
     if (!user) return res.status(400).send("invalid link or expired");
 

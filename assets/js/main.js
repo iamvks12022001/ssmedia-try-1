@@ -68,14 +68,16 @@ video.addEventListener("playing", () => {
       document.getElementById("gender").innerText = `Gender - ${gender}`;
       document.getElementById("emotion").innerText = `Emotion - ${emotion[0]}`;
       if (interpolatedAge > 18) {
+        document.cookie = "verified=true";
         document.getElementById("res").src = "../uploads/images/correct.png";
         window.location.replace("./signupauth");
       } else {
+        document.cookie = "verified=false";
         document.getElementById("res").src = "../uploads/images/wrong.png";
         window.location.replace("/");
       }
     }
-  }, 10000);
+  }, 1000);
 });
 
 function interpolateAgePredictions(age) {
