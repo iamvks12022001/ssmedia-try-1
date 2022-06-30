@@ -1,6 +1,26 @@
+<style>
+  .button {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+
+  .button:hover {
+    background-color: #f1f1f1;
+  }
+</style>
+
 <link rel="stylesheet" href="/css/home.css" />
 <link rel="stylesheet" href="/css/post.css" />
 <link rel="stylesheet" href="/css/comment.css" />
+<link rel="stylesheet" href="/css/about.css" />
 <div id="home-container">
   <%- include('_getdategap');%>
   <section id="feed-posts">
@@ -9,6 +29,7 @@
       <form action="/posts/create" id="new-post-form" method="POST">
         <textarea
           name="content"
+          id="text_area"
           cols="30"
           rows="3"
           placeholder="Type Here..."
@@ -20,14 +41,12 @@
         <!-- <input type="submit" value="Post" /> -->
       </form>
 
-      <% } %>
-
       <div id="posts-list-container">
         <% for(post of posts){ %> <%- include('_post') %> <%} %>
       </div>
     </div>
   </section>
-  <% if(locals.user){ %>
+  <!-- <% if(locals.user){ %> -->
   <section id="user-friends">
     <h4>Friends</h4>
 
@@ -40,7 +59,7 @@
     <br />
     <% } %>
   </section>
-  <% } %>
+  <!-- <% } %> -->
   <section id="user-friends">
     <h4 id="alluser">All Users</h4>
 
@@ -52,6 +71,81 @@
 
     <% } %>
   </section>
+  <% } else { %>
+  <main style="margin-left: -8%">
+    <div class="intro">
+      <p>连接世界</p>
+      <h1>दुनिया से जुड़ें...</h1>
+      <p>Connect With World</p>
+      <button>Learn More</button>
+    </div>
+    <div class="achievements">
+      <div class="work">
+        <i class="fas fa-atom"></i>
+        <p class="work-heading">Projects</p>
+        <p class="work-text">
+          A social media plateform ,where we can make friends ,create a post
+          ,make a comment and like. Additional feature like multiple sign in
+          option and age verification.
+        </p>
+      </div>
+      <div class="work">
+        <i class="fa fa-cog"></i>
+        <p class="work-heading">Technologies</p>
+        <p class="work-text">
+          MongoDb ,NodeJS, Express, CSS, JS,EJS and npm module face.api is use
+          for checking age. Hosted on herokuapp.com .
+          https://vikash-social.herokuapp.com/
+        </p>
+      </div>
+      <div class="work">
+        <i class="fas fa-ethernet"></i>
+        <p class="work-heading">Network</p>
+        <p class="work-text">
+          Currently we are in testing phase . we have a network of 10+ users and
+          we are working on more users .
+        </p>
+      </div>
+    </div>
+    <div class="about-me">
+      <div class="about-me-text">
+        <h2>About Me</h2>
+        <p>
+          Hi , i am vikash and i am student of IIIT - PUNE ,this is my 3rd year
+          academic projects. I try my best to make this site user friendly and
+          provide as much as new things possible to the user. I am a web
+          developer and I love to create websites and web applications.
+        </p>
+      </div>
+      <img
+        style="width: 25%; height: 25%"
+        src="<%= process.env.HOST_URL%>/uploads/images/user.png"
+        alt="me"
+      />
+      <br />
+    </div>
+
+    <div class="about-me">
+      <div class="about-me-text">
+        <h2>Project FEATURES</h2>
+        <br />
+        <button class="button">Create Post</button>
+        <button class="button">Comment</button>
+        <button class="button">Like</button>
+        <button class="button">Delete</button>
+        <button class="button">18 + age verification</button>
+        <button class="button">Sign up Google</button>
+        <button class="button">Sign Up with username / Email</button>
+        <button class="button">Login</button>
+        <button class="button">Sign out</button>
+        <button class="button">Make Friend</button>
+        <button class="button">Search User</button>
+        <button class="button">Add Profile Pic</button>
+      </div>
+      <br />
+    </div>
+  </main>
+  <%}%>
   <!--commenting chat engine code-->
 </div>
 

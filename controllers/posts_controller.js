@@ -3,6 +3,9 @@ const Comment = require("../models/comment");
 //import like
 const Like = require("../models/like");
 
+// function reset() {
+//   document.getelemendById("text_area").value = "";
+// }
 module.exports.create = async function (req, res) {
   try {
     let post = await Post.create({
@@ -19,6 +22,7 @@ module.exports.create = async function (req, res) {
         message: "post created !",
       });
     }
+    //  await reset();
     req.flash("success", "Post published");
     return res.redirect("back");
   } catch (error) {

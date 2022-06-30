@@ -5,6 +5,10 @@ const User = require("../models/user");
 module.exports.home = async function (req, res) {
   try {
     //changes ::populate the likes of each post and comments
+    // if (req.cookies.verified == "false") {
+    //   req.flash("error", " Under Age ");
+    // }
+
     let posts = await Post.find({})
       .sort("-createdAt")
       .populate("user")

@@ -90,9 +90,7 @@ module.exports.signUpauth = function (req, res) {
     console.log("not verified");
     return res.redirect("/users/sign-up");
   }
-  // if (!req.signupAuth()) {
-  //   return res.redirect("/users/sign-up");
-  // }
+  //req.flash("success", " Age verified > 18");
   return res.render("user_sign_up", {
     title: "iCoder | Sign Up",
   });
