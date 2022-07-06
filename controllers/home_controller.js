@@ -21,10 +21,10 @@ module.exports.home = async function (req, res) {
       .populate({
         path: "comments",
         populate: {
-          path: "likes",
+          path: "likes", //for post comment likes
         },
       }) //changing here
-      .populate("likes");
+      .populate("likes"); //for post likess
     //here it is
     let user = "";
     if (req.user) {

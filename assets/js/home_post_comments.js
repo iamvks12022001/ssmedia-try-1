@@ -26,6 +26,7 @@ class PostComments {
         success: function (data) {
           let newComment = pSelf.newCommentDom(data.data.comment);
           $(`#post-comments-${postId}`).append(newComment);
+          $("#text-area-comment").val("");
           pSelf.deleteComment($(" .delete-comment-button", newComment));
 
           // CHANGE :: enable the functionality of the toggle like button on the new comment

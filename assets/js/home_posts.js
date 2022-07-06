@@ -14,7 +14,7 @@
         success: function (data) {
           let newPost = newPostDom(data.data.post);
           $("#posts-list-container").prepend(newPost);
-
+          $("#text_area").val("");
           //#posts-list-container>ul
 
           deletePost($(" .delete-post-button", newPost));
@@ -101,6 +101,7 @@
       >
         <input
           type="text"
+          id="text-area-comment"
           name="content"
           placeholder="Type Here to add comment..."
           required
