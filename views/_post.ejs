@@ -12,7 +12,9 @@
     </div>
 
     <div class="post-content"><%= post.content %></div>
-
+    <% if(post.avatar){%>
+    <img src="<%=post.avatar %>" width="65%" />
+    <%}%>
     <div class="post-actions">
       <small class="post-like">
         <img src="../uploads/images/like.png" alt="like-icon" />

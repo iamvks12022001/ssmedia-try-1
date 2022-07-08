@@ -6,11 +6,18 @@
 
     newPostForm.submit(function (e) {
       e.preventDefault();
+      var data = new FormData(newPostForm[0]);
 
       $.ajax({
-        type: "post",
+        type: "POST",
         url: "/posts/create",
-        data: newPostForm.serialize(),
+        enctype: "multipart/form-data",
+        data: data,
+        processData: false, // Important!
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        //data: new FormData(newPostForm),
         success: function (data) {
           let newPost = newPostDom(data.data.post);
           $("#posts-list-container").prepend(newPost);
@@ -59,7 +66,8 @@
     </div>
 
     <div class="post-content">${post.content}</div>
-
+    ${post.avatar ? `<img src=${post.avatar} width="65%" />` : ""}
+    
     <div class="post-actions">
       
       <small class="post-like">

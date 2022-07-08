@@ -39,7 +39,6 @@ module.exports.update = async function (req, res) {
         if (user.avatar && user.avatar != process.env.DEFAULT_PROFILE_PIC) {
           const imageURL = user.avatar;
           const getPublicId = imageURL.split("/").pop().split(".")[0];
-          console.log("imageurl", imageURL, " ", getPublicId);
           uploader.destroy(getPublicId, function (result) {
             console.log(result);
           });

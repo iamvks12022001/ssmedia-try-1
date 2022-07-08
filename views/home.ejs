@@ -26,19 +26,36 @@
   <section id="feed-posts">
     <div id="feed-list">
       <% if(locals.user){ %>
-      <form action="/posts/create" id="new-post-form" method="POST">
+      <form
+        action="/posts/create"
+        enctype="multipart/form-data"
+        id="new-post-form"
+        method="POST"
+      >
         <textarea
           name="content"
+          type="text"
           id="text_area"
           cols="30"
           rows="3"
           placeholder="Type Here..."
           required
         ></textarea>
+        <button
+          class="login"
+          style="color: srgb(18, 18, 18); cursor: auto"
+          placeholder="media"
+        >
+          <input
+            type="file"
+            name="avatar"
+            style="cursor: pointer"
+            placeholder="Add a media"
+          />
+        </button>
         <div>
-          <button id="post-bu" type="sut" value="Post">Add Post</button>
+          <button id="post-bu" type="submit">Add Post</button>
         </div>
-        <!-- <input type="submit" value="Post" /> -->
       </form>
 
       <div id="posts-list-container">

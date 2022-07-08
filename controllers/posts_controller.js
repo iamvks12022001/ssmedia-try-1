@@ -1,3 +1,5 @@
+const { uploader } = require("../config/cloud");
+const { dataUri } = require("../config/multer");
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 //import like
@@ -11,8 +13,15 @@ module.exports.create = async function (req, res) {
     let post = await Post.create({
       content: req.body.content,
       user: req.user._id, //ye  kha se aya
+      avatar: "",
     });
-
+    if (req.file) {
+      const file = dataUri(req).content;
+      await uploader.upload(file).then((result) => {
+        post.avatar = result.url;
+        post.save();
+      });
+    }
     if (req.xhr) {
       post = await post.populate("user", "name avatar").execPopulate();
       return res.status(200).json({
@@ -23,6 +32,7 @@ module.exports.create = async function (req, res) {
       });
     }
     //  await reset();
+
     req.flash("success", "Post published");
     return res.redirect("back");
   } catch (error) {
