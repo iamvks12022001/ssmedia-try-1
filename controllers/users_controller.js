@@ -1,7 +1,8 @@
+const { uploader } = require("../config/cloud");
+const { dataUri } = require("../config/multer");
+
 const randomstring = require("randomstring");
 const User = require("../models/user");
-const fs = require("fs");
-const path = require("path");
 const Post = require("../models/post");
 const sendEmail = require("../mailers/verify_email");
 const setpassword = require("../mailers/set_password");
@@ -32,32 +33,26 @@ module.exports.update = async function (req, res) {
   if (req.user.id == req.params.id) {
     try {
       let user = await User.findByIdAndUpdate(req.params.id);
-      User.uploadedAvatar(req, res, function (err) {
-        if (err) {
-          console.log("*** MUTLER ERROR", err);
+      user.name = req.body.name;
+      user.email = req.body.email;
+      if (req.file) {
+        if (user.avatar && user.avatar != process.env.DEFAULT_PROFILE_PIC) {
+          const imageURL = user.avatar;
+          const getPublicId = imageURL.split("/").pop().split(".")[0];
+          console.log("imageurl", imageURL, " ", getPublicId);
+          uploader.destroy(getPublicId, function (result) {
+            console.log(result);
+          });
         }
-
-        user.name = req.body.name;
-        user.email = req.body.email;
-        if (req.file) {
-          if (user.avatar) {
-            if (fs.existsSync(path.join(__dirname, "..", user.avatar))) {
-              //deleting the file (old avatar)
-
-              if (
-                user.avatar != "\\uploads\\users\\avatars/avatar-1646916243830"
-              ) {
-                fs.unlinkSync(path.join(__dirname, "..", user.avatar));
-              }
-            }
-          }
-
-          user.avatar = User.avatarPath + "/" + req.file.filename;
-        }
-        user.save();
-        return res.redirect("back");
-      });
+        const file = dataUri(req).content;
+        uploader.upload(file).then((result) => {
+          user.avatar = result.url;
+          user.save();
+        });
+      }
+      return res.redirect("back");
     } catch (error) {
+      console.log("error ", error);
       req.flash("error", error);
       return res.redirect("back");
     }
@@ -151,7 +146,7 @@ module.exports.create = function (req, res) {
           return;
         }
         newuser.newComment(user);
-        user.avatar = User.avatarPath + "/avatar-1646916243830";
+        user.avatar = process.env.DEFAULT_PROFILE_PIC;
 
         console.log("user", user.avatar);
         user.save();

@@ -16,7 +16,7 @@ const MongoStore = require("connect-mongo")(session);
 const sassMiddleware = require("node-sass-middleware-5");
 const flash = require("connect-flash");
 const customeMware = require("./config/middleware");
-
+const { cloudinaryConfig } = require("./config/cloud");
 if (process.env.NAME == "development") {
   app.use(
     sassMiddleware({
@@ -30,6 +30,8 @@ if (process.env.NAME == "development") {
 }
 app.use(express.static("./assets"));
 app.use(expressLayouts);
+
+app.use("*", cloudinaryConfig);
 
 app.use(express.urlencoded());
 app.use(cookieParser());

@@ -35,7 +35,7 @@ passport.use(
               name: profile.displayName,
               email: profile.emails[0].value,
               password: crypto.randomBytes(20).toString("hex"),
-              avatar: User.avatarPath + "/avatar-1646916243830",
+              avatar: process.env.DEFAULT_PROFILE_PIC,
             },
             function (err, user) {
               if (err) {

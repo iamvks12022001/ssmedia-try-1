@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const usersController = require("../controllers/users_controller");
-
+const { multerUploads } = require("../config/multer");
 const passport = require("passport");
 
 //now profile page cant be accessed without proper sign in
@@ -15,6 +15,7 @@ router.get(
 router.post(
   "/update/:id",
   passport.checkAuthentication,
+  multerUploads,
   usersController.update
 );
 
