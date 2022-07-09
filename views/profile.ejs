@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/css/user_profile.css" />
-
+<%- include('_getdategap');%>
 <div class="screen-1">
   <img src="<%=profile_user.avatar %>" alt="<%= user.name %>" width="100" />
   <% if(user.id==profile_user.id){ %>

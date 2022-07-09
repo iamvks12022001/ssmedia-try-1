@@ -19,16 +19,13 @@
     <link rel="stylesheet" href="/css/footer.css" />
 
     <!-- too add static file -->
-
     <%- style %>
   </head>
   <body>
     <%- include('_header');%>
-
     <main id="layout-main"><%- body %></main>
 
     <%- include('_footer'); %> <%- script %>
-
     <script>
       <% if(flash.success && flash.success.length > 0){ %>
        new Noty({
