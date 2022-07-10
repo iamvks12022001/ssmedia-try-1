@@ -56,7 +56,7 @@ app.use(
     store: new MongoStore(
       {
         mongooseConnection: db,
-        autoRemove: "disabled",
+        autoRemove: "native",
       },
       function (err) {
         console.log(err || "connect-mongodb setup ok");
