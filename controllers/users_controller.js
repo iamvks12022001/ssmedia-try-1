@@ -70,10 +70,10 @@ module.exports.signUp = function (req, res) {
   }
   // res.cookie("verified", false);
   return res.render("face", {
-    title: "iCoder | face detection",
+    title: "connectduniya | face detection",
   });
   // return res.render("user_sign_up", {
-  //   title: "iCoder | Sign Up",
+  //   title: "connectduniya | Sign Up",
   // });
 };
 module.exports.signUpauth = function (req, res) {
@@ -86,7 +86,7 @@ module.exports.signUpauth = function (req, res) {
   }
   //req.flash("success", " Age verified > 18");
   return res.render("user_sign_up", {
-    title: "iCoder | Sign Up",
+    title: "connectduniya | Sign Up",
   });
 };
 
@@ -96,7 +96,7 @@ module.exports.signIn = function (req, res) {
   }
 
   return res.render("user_sign_in", {
-    title: "iCoder | Sign In",
+    title: "connectduniya| Sign In",
   });
 };
 
