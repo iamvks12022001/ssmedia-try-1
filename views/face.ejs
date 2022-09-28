@@ -1,6 +1,14 @@
 <link rel="stylesheet" href="/css/face.css" />
 
 <header>Face recognition in the browser</header>
+<div class="progress-bar2">
+  <div class="progress2">
+    <p class="counter2">0%</p>
+    <div class="bar2"></div>
+  </div>
+  <p class="success2"></p>
+</div>
+<br />
 <div class="container">
   <video id="video" height="500" width="500" autoplay muted></video>
 </div>
@@ -12,3 +20,23 @@
 </div>
 <script src="/js/face-api.min.js"></script>
 <script src="/js/main.js"></script>
+<script>
+  const bar = document.querySelector(".bar2");
+  let width = 1;
+  const success = document.querySelector(".success2");
+  const counter = document.querySelector(".counter2");
+
+  function start() {
+    setInterval(() => {
+      if (width >= 100) {
+        success.innerHTML = "Dowload completed!";
+        clearInterval();
+      } else {
+        width++;
+        bar.style.width = width + "%";
+        counter.innerHTML = width + "%";
+      }
+    }, 1000);
+  }
+  start();
+</script>

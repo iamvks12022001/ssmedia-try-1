@@ -7,7 +7,6 @@ Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri("/models_ai"),
   faceapi.nets.faceLandmark68Net.loadFromUri("/models_ai"),
   faceapi.nets.faceRecognitionNet.loadFromUri("/models_ai"),
-  faceapi.nets.faceExpressionNet.loadFromUri("/models_ai"),
   faceapi.nets.ageGenderNet.loadFromUri("/models_ai"),
 ]).then(startVideo);
 
@@ -41,30 +40,34 @@ video.addEventListener("playing", () => {
   faceapi.matchDimensions(canvas, displaySize);
 
   setInterval(async () => {
+    console.log("here we go again");
     const detections = await faceapi
       .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
       .withFaceLandmarks()
-      .withFaceExpressions()
       .withAgeAndGender();
 
-    const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+    const resizedDetections = await faceapi.resizeResults(
+      detections,
+      displaySize
+    );
+    await canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 
     /****Drawing the detection box and landmarkes on canvas****/
-    faceapi.draw.drawDetections(canvas, resizedDetections);
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+    await faceapi.draw.drawDetections(canvas, resizedDetections);
+    await faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
 
     /****Setting values to the DOM****/
     if (resizedDetections && Object.keys(resizedDetections).length > 0) {
       const age = resizedDetections.age;
-      const interpolatedAge = interpolateAgePredictions(age);
-      const gender = resizedDetections.gender;
-      const expressions = resizedDetections.expressions;
-      const maxValue = Math.max(...Object.values(expressions));
-      const emotion = Object.keys(expressions).filter(
-        (item) => expressions[item] === maxValue
-      );
+      const interpolatedAge = await interpolateAgePredictions(age);
+      // const gender = resizedDetections.gender;
+      // const expressions = resizedDetections.expressions;
+      // const maxValue = Math.max(...Object.values(expressions));
+      // const emotion = Object.keys(expressions).filter(
+      //   (item) => expressions[item] === maxValue
+      // );
       document.getElementById("age").innerText = `Age - ${interpolatedAge}`;
+      clearInterval();
       // document.getElementById("gender").innerText = `Gender - ${gender}`;
       // document.getElementById("emotion").innerText = `Emotion - ${emotion[0]}`;
       if (interpolatedAge > 18) {
@@ -77,7 +80,7 @@ video.addEventListener("playing", () => {
         window.location.replace("/");
       }
     }
-  }, 1000);
+  }, 10000);
 });
 
 function interpolateAgePredictions(age) {

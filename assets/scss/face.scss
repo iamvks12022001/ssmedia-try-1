@@ -53,3 +53,54 @@ canvas {
 video {
   width: 100%;
 }
+
+.progress-bar2 {
+  width: 600px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  background-color: white;
+}
+
+.progress2 {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  margin-bottom: 20px;
+  background-color: #e2e2e2;
+  border-radius: 40px;
+}
+
+.progress2 p {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.progress2 .bar2 {
+  position: absolute;
+  border-radius: 40px;
+  height: 100%;
+  width: 0%;
+  background-color: #304ffe;
+}
+
+.progress-bar2 button {
+  padding: 10px 15px;
+  background-color: #304ffe;
+  border: none;
+  border-radius: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+.success2 {
+  color: green;
+  margin-bottom: 10px;
+}
