@@ -13,7 +13,7 @@ Promise.all([
 
 function startVideo() {
   navigator.getUserMedia(
-    { video: {} },
+    { video: true },
     (stream) => (video.srcObject = stream),
     (err) => console.error(err)
   );
@@ -65,8 +65,8 @@ video.addEventListener("playing", () => {
         (item) => expressions[item] === maxValue
       );
       document.getElementById("age").innerText = `Age - ${interpolatedAge}`;
-      document.getElementById("gender").innerText = `Gender - ${gender}`;
-      document.getElementById("emotion").innerText = `Emotion - ${emotion[0]}`;
+      // document.getElementById("gender").innerText = `Gender - ${gender}`;
+      // document.getElementById("emotion").innerText = `Emotion - ${emotion[0]}`;
       if (interpolatedAge > 18) {
         document.cookie = "verified=true";
         document.getElementById("res").src = "../uploads/images/correct.png";

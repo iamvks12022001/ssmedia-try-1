@@ -66,9 +66,11 @@ app.use(
 );
 
 app.use(passport.initialize());
+
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+
 app.use(flash());
 app.use(customeMware.setFlash); // to send the messages to local storage
 

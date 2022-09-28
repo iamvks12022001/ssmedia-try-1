@@ -8,6 +8,7 @@ const likeSchema = new mongoose.Schema(
     // this defines the object id of the liked object
     //likable is can be of post or comment object
     likeable: {
+      //may be post id and or comment id
       type: mongoose.Schema.ObjectId,
       require: true,
       refPath: "onModel",
