@@ -65,25 +65,26 @@ module.exports.signUp = function (req, res) {
   if (req.isAuthenticated()) {
     return res.redirect("/users/profile/" + req.user.id);
   }
-  if (req.cookies.verified == "true") {
-    return res.redirect("/users/signupauth");
-  }
-  // res.cookie("verified", false);
-  return res.render("face", {
-    title: "connectduniya | face detection",
-  });
+  // if (req.cookies.verified == "true") {
+  //   return res.redirect("/users/signupauth");
+  // }
+  // // res.cookie("verified", false);
+  // return res.render("face", {
+  //   title: "connectduniya | face detection",
+  // });
   // return res.render("user_sign_up", {
   //   title: "connectduniya | Sign Up",
   // });
+  return res.redirect("/users/signupauth");
 };
 module.exports.signUpauth = function (req, res) {
   if (req.isAuthenticated()) {
     return res.redirect("/users/profile/" + req.user.id);
   }
-  if (req.cookies.verified == "false" || !req.cookies.verified) {
-    console.log("not verified");
-    return res.redirect("/users/sign-up");
-  }
+  // if (req.cookies.verified == "false" || !req.cookies.verified) {
+  //   console.log("not verified");
+  //   return res.redirect("/users/sign-up");
+  // }
   //req.flash("success", " Age verified > 18");
   return res.render("user_sign_up", {
     title: "connectduniya | Sign Up",
