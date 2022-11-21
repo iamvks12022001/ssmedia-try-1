@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String, //defining in the schema
     },
+    faceid: {
+      type: String, //defining in the schema
+    },
     friends: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -106,6 +106,9 @@ module.exports.verifyEmail = async function (req, res) {
     if (req.body.password != req.body.confirm_password) {
       return res.redirect("back");
     }
+    if (req.body.faceid) {
+      console.log("face id", req.body.faceid);
+    }
     const num = await randomstring.generate();
     console.log(num);
     await sendEmail.verifyEmail(req.body.email, num);
@@ -147,6 +150,9 @@ module.exports.create = function (req, res) {
         }
         newuser.newComment(user);
         user.avatar = process.env.DEFAULT_PROFILE_PIC;
+        if (userlog.faceid) {
+          user.faceid = userlog.faceid;
+        }
 
         console.log("user", user.avatar);
         user.save();
